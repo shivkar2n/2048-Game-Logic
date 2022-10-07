@@ -4,6 +4,7 @@ class Game_2048:
     def __init__(self):
         row = [0]*4
         self.board = [row[:] for i in range(4)]
+        self.score = 0
 
         loc1 = [randint(0,3), randint(0,3)]
         loc2 = [randint(0,3), randint(0,3)]
@@ -20,7 +21,7 @@ class Game_2048:
             self.board[loc2[0]][loc2[1]] = 4
         else:
             self.board[loc2[0]][loc2[1]] = 2
-    
+
     def game(self):
         print(*self.board,sep='\n')
         while True:
@@ -30,7 +31,7 @@ class Game_2048:
                 print('\nYou lose!')
                 break
             print('\n', *self.board, sep='\n')
-
+            print(f"Score: {self.score}\n")
             if any(2048 in row for row in self.board):
                 print('\nYou win!')
                 break
@@ -49,15 +50,15 @@ class Game_2048:
     def turn(self):
         moves = {
             'w' : self.move_up(self.board[:]),
-            'a' : self.move_left(self.board[:]), 
+            'a' : self.move_left(self.board[:]),
             's' : self.move_down(self.board[:]),
             'd' : self.move_right(self.board[:])
         }
-        
+
         move = 'x'
         while move not in moves.keys():
             move = str(input('Enter move: '))
-        
+
         if all(self.board==move_board for move_board in moves.values()):
             self.board = 0
         else:
@@ -68,7 +69,7 @@ class Game_2048:
 
     def move_up(self, copy):
         return self.transpose(self.move_left(self.transpose(copy)))
-        
+
     def move_left(self, copy):
         for row in range(4):
             nums = [num for num in copy[row] if num != 0]
@@ -77,6 +78,7 @@ class Game_2048:
             while i < len(nums):
                 if i < len(nums)-1 and nums[i] == nums[i+1]:
                     merged_nums.append(2*nums[i])
+                    self.score += 2*nums[i]
                     i += 2
                 else:
                     merged_nums.append(nums[i])
@@ -103,5 +105,8 @@ class Game_2048:
 
     def transpose(self, copy):
         return [[board_row[col] for board_row in copy] for col in range(4)]
+
+    def getBoard(self):
+        return self.board
 
 Game_2048().game()
