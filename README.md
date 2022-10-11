@@ -7,8 +7,5 @@ Clone the repository
 Change directory to repo
 `cd 2048-Game-Logic`
 
-Install packages
-`npm install`
-
 Run using following command
-`npm start` 
+`python3 Game2048/Game.py`
