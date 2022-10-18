@@ -1,6 +1,6 @@
 # 2048-Game-Logic
 
-Make sure to have node v16 installed
+Make sure to have python3 installed
 
 Clone the repository
 

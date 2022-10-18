@@ -35,7 +35,33 @@ def heuristic(board: list) -> float:
         board.copy()), numAdjTiles(board.copy(), False)+numAdjTiles(board.copy(),True)]
     return 16/x1+x2/11+x3/8
 
+
+def averageWeight(board: list) -> float:
+    total = n = 0
+    temp = board.copy()
+    for i in range(len(temp)):
+        for j in range(len(temp[i])):
+            if temp[i][j] == 0:
+                temp[i][j], total = 2, total+heuristic(temp)
+                temp[i][j], total = 4, total+heuristic(temp)
+                n += 2
+                temp[i][j] = 0
+    return total/n
+
+
+def isGameOver(board: list):
+    for row in board:
+        for square in row:
+            if square == 0: return False
+
+    for i in range(4):
+        for j in range(3):
+            if board[i][j] == board[i][j+1] : return False
+            if board[j][i] == board[j+1][i] : return False
+    return True
+
+
 def goalTest(board:list) -> bool:
-    return any(2048 in row for row in board)
+    return any(256 in row for row in board)
 
 
